@@ -1,0 +1,171 @@
+# author: stouty
+# last update: 10dec17
+
+##---Basic Definitions---##
+set $mod Mod1
+set $term gnome-terminal
+set $gaps-default 15
+set $gaps-increment 5
+
+set $ws1 "1:     "
+set $ws2 "2:     "
+set $ws3 "3:     "
+set $ws4 "4:     "
+set $ws5 "5: "
+set $ws6 "6: "
+set $ws7 "7: "
+set $ws8 "8: "
+set $ws9 "9: "
+set $ws10 "10:     "
+
+hide_edge_borders both
+for_window [class="^.*"] border pixel 0
+gaps inner $gaps-default
+gaps outer $gaps-default
+
+font pango: Ubuntu Regular 10
+
+# Wallpaper
+exec_always feh --bg-fill /home/stouty/Pictures/Wallpapers/spruce.jpg
+
+##---Startup---##
+exec --no-startup-id xfce4-power-manager
+exec --no-startup-id compton -bcf
+exec --no-startup-id gnome-terminal -name scratchpad move scratchpad
+
+##---Bar---##
+# i3status.conf /etc/.i3status.conf
+# i3blocks.conf /.i3blocks.conf
+# /bumblebee-status
+bar {
+  font pango: Ubuntu Mono, FontAwesome 10
+  status_command ~/bumblebee-status/bumblebee-status -m disk:home cpu memory battery pasink brightness weather date time spotify -p interval=1 time.format="%H:%M:%S" date.format="%a, %b %d" home.path=/home -t stouty 
+  tray_output none
+  colors {
+    # Class             border  backgr. text
+    focused_workspace   #000000 #2aa198 #000000
+    active_workspace    #000000 #285577 #ffffff
+    inactive_workspace  #000000 #000000 #586e75
+    urgent_workspace    #000000 #cb4b16 #ffffff
+    binding_mode        #000000 #2aa198 #ffffff
+  }
+}
+
+##---Key Bindings---##
+bindsym $mod+Return exec $term
+
+bindsym $mod+w exec firefox
+bindsym $mod+Shift+w exec chromium-browser
+bindsym $mod+r exec $term -e ranger
+bindsym $mod+d exec rofi -show run -font "Ubuntu Mono Regular 12"
+
+bindsym $mod+Shift+y resize shrink width 10 px or 10 ppt
+bindsym $mod+Shift+u resize shrink height 10 px or 10 ppt
+bindsym $mod+Shift+i resize grow height 10 px or 10 ppt
+bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
+
+bindsym $mod+q kill
+bindsym $mod+Shift+q kill
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle 
+
+# gaps
+bindsym $mod+s gaps inner current plus $gaps-increment
+bindsym $mod+Shift+s gaps inner current minus $gaps-increment
+bindsym $mod+Shift+t gaps inner current set $gaps-default; gaps outer current set $gaps-default
+bindsym $mod+Shift+d gaps inner current set 0; gaps outer current set 0
+
+# reload the configuration file
+bindsym $mod+Shift+grave reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+BackSpace restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Escape exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# lock
+bindsym $mod+shift+period exec ~/.config/i3/lock.sh
+
+# Transparency
+#bindsym $mod+Shift+comma exec transset -a --dec .15
+#bindsym $mod+Shift+period exec transset -a --inc .15
+
+
+##---Windows/Workspaces---##
+assign [class="Firefox|Chromium-browser"] workspace $ws1
+for_window [class="Spotify"] move to workspace $ws10
+
+for_window [window_role="pop-up|bubble|task_dialog|Preferences"] floating enable
+for_window [window_type="dialog|menu"] floating enable
+
+bindsym $mod+z split h
+bindsym $mod+x split v
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+Shift+z layout stacking
+bindsym $mod+Shift+x layout tabbed
+bindsym $mod+Shift+c layout toggle split
+
+# Use mouse to drag floating windows
+floating_modifier $mod
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+bindsym $mod+a focus parent
+bindsym $mod+Shift+a focus child
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+bindsym $mod+minus workspace prev
+bindsym $mod+equal workspace next
+bindsym $mod+Tab workspace back_and_forth
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1; workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2; workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3; workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4; workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5; workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6; workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7; workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8; workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9; workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10; workspace $ws10
