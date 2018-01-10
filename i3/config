@@ -1,5 +1,4 @@
-# author: stouty
-# last update: 17dec17
+# Stouty 2018
 
 ##---Basic Definitions---##
 set $mod Mod1
@@ -22,21 +21,23 @@ hide_edge_borders both
 for_window [class="^.*"] border pixel 0
 gaps inner $gaps-default
 gaps outer $gaps-default
+client.focused #285577 #285577 #ffffff
 
 font pango: Ubuntu Regular 10
 
 ##---Startup---##
 exec_always --no-startup-id ~/.config/i3/startup.sh
 exec --no-startup-id xfce4-power-manager
-exec --no-startup-id "compton --config ~/.config/compton/compton.conf -b -f -c -i 0.9 -o .9"
-exec --no-startup-id terminator -r float
+exec --no-startup-id lxpolkit
+exec --no-startup-id "compton --config ~/.config/compton/compton.conf -bfc"
+exec --no-startup-id $term -name float
 
 # Wallpaper
-exec_always feh --bg-fill /home/stouty/Pictures/Wallpapers/spruce.jpg
+exec_always feh --bg-fill /home/stouty/Pictures/wallpapers/sat.png
 
 ##---Bar---##
 bar {
-  font pango: Ubuntu Mono, FontAwesome 10
+  font pango: Hack, FontAwesome 8
   status_command ~/.config/bumblebee-status/bumblebee-status -m disk:home cpu memory battery pasink brightness weather date time spotify -p interval=1 time.format="%H:%M:%S" date.format="%a, %b %d" home.path=/home -t stouty 
   tray_output none
   colors {
@@ -52,10 +53,11 @@ bar {
 ##---Key Bindings---##
 bindsym $mod+Return exec $term
 
-bindsym $mod+w exec qutebrowser
-bindsym $mod+Shift+w exec firefox 
-bindsym $mod+r exec $term -e ranger
-bindsym $mod+d exec rofi -show run -font "Monospace Regular 10"
+bindsym $mod+w exec --no-startup-id qutebrowser
+bindsym $mod+Shift+w exec --no-startup-id firefox 
+bindsym $mod+r exec --no-startup-id $term -e ranger
+bindsym $mod+Shift+r exec --no-startup-id thunar
+bindsym $mod+d exec --no-startup-id rofi -show run -font "Hack 10"
 
 bindsym $mod+Shift+y resize shrink width 10 px or 10 ppt
 bindsym $mod+Shift+u resize shrink height 10 px or 10 ppt
@@ -95,13 +97,14 @@ for_window [class="Spotify"] move to workspace $ws10
 
 for_window [window_role="pop-up|bubble|task_dialog|Preferences"] floating enable
 
-for_window [window_role="float"] floating enable
-for_window [window_role="float"] resize set 825 400
-for_window [window_role="float"] move position center
-for_window [window_role="float"] move scratchpad
+for_window [instance="float"] floating enable
+for_window [instance="float"] resize set 825 400
+for_window [instance="float"] move position center
+for_window [instance="float"] move scratchpad
+for_window [instance="float"] border pixel 1
 
 bindsym $mod+e scratchpad show; move position center
-bindsym $mod+Shift+e exec --no-startup-id terminator -r float
+bindsym $mod+Shift+e exec --no-startup-id $term -name float
 
 bindsym $mod+z split h
 bindsym $mod+x split v
