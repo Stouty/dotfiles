@@ -5,6 +5,7 @@ set $mod Mod1
 set $term urxvt
 set $gaps-default 15
 set $gaps-increment 5
+set $resize 6
 
 set $ws1 "1:     "
 set $ws2 "2:     "
@@ -59,10 +60,10 @@ bindsym $mod+r exec --no-startup-id $term -e ranger
 bindsym $mod+Shift+r exec --no-startup-id thunar
 bindsym $mod+d exec --no-startup-id rofi -show run -font "Hack 10"
 
-bindsym $mod+Shift+y resize shrink width 10 px or 10 ppt
-bindsym $mod+Shift+u resize shrink height 10 px or 10 ppt
-bindsym $mod+Shift+i resize grow height 10 px or 10 ppt
-bindsym $mod+Shift+o resize grow width 10 px or 10 ppt
+bindsym $mod+Shift+y resize shrink width $resize px or $resize ppt
+bindsym $mod+Shift+u resize shrink height $resize px or $resize ppt
+bindsym $mod+Shift+i resize grow height $resize px or $resize ppt
+bindsym $mod+Shift+o resize grow width $resize px or $resize ppt
 
 bindsym $mod+q kill
 bindsym $mod+Shift+q kill
