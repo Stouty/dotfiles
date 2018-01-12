@@ -37,19 +37,22 @@ exec --no-startup-id $term -name float
 exec_always feh --bg-fill /home/stouty/Pictures/wallpapers/sat.png
 
 ##---Bar---##
-bar {
-  font pango: Hack, FontAwesome 8
-  status_command ~/.config/bumblebee-status/bumblebee-status -m disk:home cpu memory battery pasink brightness weather date time spotify -p interval=1 time.format="%H:%M:%S" date.format="%a, %b %d" home.path=/home -t stouty 
-  tray_output none
-  colors {
-    # Class             border  backgr. text
-    focused_workspace   #000000 #2aa198 #000000
-    active_workspace    #000000 #285577 #ffffff
-    inactive_workspace  #000000 #000000 #586e75
-    urgent_workspace    #000000 #cb4b16 #ffffff
-    binding_mode        #000000 #2aa198 #ffffff
-  }
-}
+
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+#bar {
+#  font pango: Hack, FontAwesome 8
+#  status_command ~/.config/bumblebee-status/bumblebee-status -m disk:home cpu memory battery pasink brightness weather date time spotify -p interval=1 time.format="%H:%M:%S" date.format="%a, %b %d" home.path=/home -t stouty 
+#  tray_output none
+#  colors {
+#    # Class             border  backgr. text
+#    focused_workspace   #000000 #2aa198 #000000
+#    active_workspace    #000000 #285577 #ffffff
+#    inactive_workspace  #000000 #000000 #586e75
+#    urgent_workspace    #000000 #cb4b16 #ffffff
+#    binding_mode        #000000 #2aa198 #ffffff
+#  }
+#}
 
 ##---Key Bindings---##
 bindsym $mod+Return exec $term
